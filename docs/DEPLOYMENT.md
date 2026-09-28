@@ -82,8 +82,9 @@ screen, choose:
 
 ### Step 1 — Create the database
 
-Our app uses **PostgreSQL**. In cPanel, look for **PostgreSQL Databases** (or
-**Databases → PostgreSQL**):
+Our app uses **PostgreSQL**. If your cPanel offers both PostgreSQL and MariaDB/MySQL,
+**choose PostgreSQL** — the app's database schema is written for it. In cPanel, look for
+**PostgreSQL Databases** (or **Databases → PostgreSQL**):
 
 1. Create a database, e.g. `nextntech`.
 2. Create a user with a strong password and **add it to the database with all
