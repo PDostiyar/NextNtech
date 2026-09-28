@@ -1,0 +1,253 @@
+// NextNTech.org — database schema
+// Baseline: docs/NextNTech-Architecture-and-Setup-Guide.md §4, extended with
+// docs/NextNTech-Complete-Project-Package.md §3.2 and CLAUDE.md decisions
+// (content lives in Postgres, no Strapi; Auth.js v5 tables).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  LEARNER
+  ADMIN
+}
+
+enum ProgressStatus {
+  STARTED
+  COMPLETED
+}
+
+// ───────────────────────── Users & Auth.js ─────────────────────────
+
+model User {
+  id              String    @id @default(cuid())
+  name            String?
+  email           String    @unique
+  emailVerified   DateTime?
+  image           String?
+  passwordHash    String? // null when the user only uses social login
+  role            Role      @default(LEARNER)
+  birthYear       Int?
+  preferredLocale String    @default("en")
+  preferredVoice  String    @default("woman") // "woman" | "man"
+  // Under-13 learners: a parent/guardian must approve the account.
+  parentEmail     String?
+  parentConsentAt DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  accounts     Account[]
+  sessions     Session[]
+  progress     Progress[]
+  answers      QuizAnswer[]
+  certificates Certificate[]
+  streak       Streak?
+}
+
+// Auth.js v5 Prisma adapter tables
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ───────────────────────── Content ─────────────────────────
+
+model Course {
+  id        String   @id @default(cuid())
+  slug      String   @unique // "front-end-development"
+  key       String   @unique // design key: frontend | backend | fullstack | python | mobile | career
+  title     String
+  summary   String
+  emoji     String
+  color     String // hex, e.g. "#2EC4B6"
+  order     Int
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  modules      Module[]
+  certificates Certificate[]
+}
+
+model Module {
+  id        String   @id @default(cuid())
+  courseId  String
+  slug      String
+  title     String
+  order     Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  course  Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  lessons Lesson[]
+
+  @@unique([courseId, slug])
+  @@index([courseId, order])
+}
+
+model Lesson {
+  id            String   @id @default(cuid())
+  moduleId      String
+  slug          String   @unique
+  order         Int
+  title         String
+  // Ordered array of typed blocks — see lib/lesson-blocks.ts
+  body          Json
+  videoUrl      String? // YouTube URL (embedded via youtube-nocookie.com)
+  audioWomanUrl String? // pre-generated narration MP3 (optional)
+  audioManUrl   String?
+  // { type, title, hint, starter?, phone? } — see lib/lesson-blocks.ts
+  playground    Json?
+  published     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  module       Module              @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  questions    QuizQuestion[]
+  progress     Progress[]
+  translations LessonTranslation[]
+
+  @@index([moduleId, order])
+}
+
+model LessonTranslation {
+  id        String   @id @default(cuid())
+  lessonId  String
+  locale    String // "fa" | "ps"
+  title     String
+  body      Json // same block format as Lesson.body
+  videoUrl  String? // optional dubbed/subtitled video
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  lesson Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@unique([lessonId, locale])
+}
+
+model QuizQuestion {
+  id        String @id @default(cuid())
+  lessonId  String
+  order     Int
+  prompt    String
+  options   Json // string[]
+  answerIdx Int // NEVER sent to the client before the learner answers
+  explain   String // shown after answering
+
+  lesson       Lesson                    @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  answers      QuizAnswer[]
+  translations QuizQuestionTranslation[]
+
+  @@index([lessonId, order])
+}
+
+model QuizQuestionTranslation {
+  id         String @id @default(cuid())
+  questionId String
+  locale     String
+  prompt     String
+  options    Json // string[], same order as the English options
+  explain    String
+
+  question QuizQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@unique([questionId, locale])
+}
+
+// ───────────────────────── Learner data ─────────────────────────
+
+model QuizAnswer {
+  id          String   @id @default(cuid())
+  userId      String
+  questionId  String
+  selectedIdx Int
+  isCorrect   Boolean
+  answeredAt  DateTime @default(now())
+
+  user     User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  question QuizQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@index([userId, answeredAt])
+  @@index([questionId])
+}
+
+model Progress {
+  id          String         @id @default(cuid())
+  userId      String
+  lessonId    String
+  status      ProgressStatus @default(STARTED)
+  score       Int? // correct answers on this lesson's quiz
+  completedAt DateTime?
+  completedOn DateTime?      @db.Date // learner's LOCAL date, used for streaks & daily goal
+  updatedAt   DateTime       @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lesson Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, lessonId])
+  @@index([userId, completedOn])
+}
+
+model Streak {
+  id           String    @id @default(cuid())
+  userId       String    @unique
+  current      Int       @default(0)
+  longest      Int       @default(0)
+  dailyGoal    Int       @default(1) // modules per day (1–5)
+  lastActiveOn DateTime? @db.Date // learner's LOCAL date
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Certificate {
+  id         String   @id @default(cuid())
+  userId     String
+  courseId   String
+  issuedAt   DateTime @default(now())
+  pdfUrl     String?
+  verifyCode String   @unique // public code printed on the certificate
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, courseId])
+}

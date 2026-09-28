@@ -12,7 +12,7 @@ state of the repo before continuing."*
 
 | Phase | Status |
 |---|---|
-| 1 — Foundation, design system, and GitHub | Not started (needs `docs/nextntech-demo-v3-1.jsx`) |
+| 1 — Foundation, design system, and GitHub | ✅ Done |
 | 2 — Lessons, playgrounds, video and audio | Not started |
 | 3 — Accounts, social login, and child safety | Not started |
 | 4 — Dashboard, certificates, and sharing | Not started |

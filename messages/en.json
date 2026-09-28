@@ -1,0 +1,96 @@
+{
+  "meta": {
+    "title": "NextNTech.org — Free coding for kids",
+    "description": "What's next in technology — for you and your kids. Free, non-profit, ad-free coding lessons with visuals, practice and quizzes."
+  },
+  "nav": {
+    "courses": "Courses",
+    "progress": "My Progress",
+    "about": "About",
+    "signin": "Sign in",
+    "home": "NextNTech.org home",
+    "language": "Language"
+  },
+  "home": {
+    "badge": "A NON-PROFIT · FREE FOREVER · NO ADS",
+    "heroTitle": "What's next in technology — for you and your kids.",
+    "heroSub": "Every kid deserves to become a technology geek. Learn front-end, back-end, full-stack and Python with simple lessons, visuals, hands-on practice and quick quizzes — free forever.",
+    "heroAnywhere": "Start anywhere. Curious about servers? Jump straight into Back-End — no required order.",
+    "ctaStart": "Start learning — it's free",
+    "ctaInvite": "Invite a friend",
+    "pickStart": "Pick your starting point",
+    "modulesReady": "{count, plural, =0 {Coming soon} one {# module ready →} other {# modules ready →}}",
+    "howTitle": "How every lesson works",
+    "stepRead": "Read",
+    "stepReadDesc": "Short text with visuals that stick in your mind.",
+    "stepPractice": "Practice",
+    "stepPracticeDesc": "Watch a short video, listen to the lesson in a man's or woman's voice, then try it in a live playground.",
+    "stepAnswer": "Answer",
+    "stepAnswerDesc": "3–5 questions per module — correct answers saved to your profile.",
+    "stepAchieve": "Achieve",
+    "stepAchieveDesc": "Streaks, daily goals, and a named certificate per course."
+  },
+  "common": {
+    "allCourses": "All courses",
+    "anywhereNote": "Start anywhere — front end, back end, Python… no required order.",
+    "start": "Start",
+    "review": "Review",
+    "coming": "Coming soon",
+    "back": "←"
+  },
+  "course": {
+    "module": "Module {n}",
+    "moduleReady": "Lesson + video + audio + practice + quiz",
+    "lessons": "{count, plural, one {# lesson} other {# lessons}}"
+  },
+  "lesson": {
+    "eyebrow": "MODULE {n}",
+    "note": "Lesson content is in English for now. Translated lessons are on the way — and browser translation (e.g. Google Translate) works too.",
+    "check": "Check your knowledge",
+    "saved": "Correct answers are saved to your profile.",
+    "listen": "Listen to lesson",
+    "stop": "Stop audio",
+    "video": "Watch video",
+    "man": "Man's voice",
+    "woman": "Woman's voice",
+    "practiceSoon": "The practice playground, video, audio and quiz for this lesson are being built — they arrive in the next update."
+  },
+  "progress": {
+    "title": "My progress",
+    "keep": "Keep learning →",
+    "soon": "Soon you'll see your streak, daily goal, history and certificates here."
+  },
+  "login": {
+    "title": "Welcome to NextNTech",
+    "sub": "Create a free account to save your progress, streaks and certificates.",
+    "soon": "Sign-up and sign-in are coming very soon. Until then, every lesson is open to you!"
+  },
+  "about": {
+    "title": "About NextNTech.org",
+    "lead": "Our goal is simple: kids deserve to become technology geeks.",
+    "p1": "No payment, no paid subscription, and no paywall should ever stop a young person from learning to build the future.",
+    "p2": "NextNTech.org is a non-profit learning platform. Every course — from your first HTML tag to full-stack development, Python, mobile apps and your first freelance job — is free, forever.",
+    "p3": "We teach with simple text, memorable visuals, hands-on practice, and short quizzes. Your progress, streaks, correct answers and certificates are saved to your free account.",
+    "shareTitle": "Know a curious kid?",
+    "shareButton": "Share NextNTech.org"
+  },
+  "share": {
+    "title": "Invite others to NextNTech.org",
+    "sub": "Each network gets its own customized message with a link to the registration page.",
+    "shareOn": "Share on {network}",
+    "copyCaption": "Copy caption for Instagram",
+    "copied": "Copied! Paste it into your Instagram post.",
+    "close": "Close",
+    "textX": "🌟 I'm learning to code for FREE on NextNTech.org — front-end, back-end, Python & more. Every kid deserves to become a technology geek. Join me → {url} #NextNTech #LearnToCode",
+    "textLinkedIn": "NextNTech.org is a non-profit platform teaching kids and young people real coding skills — full-stack development, Python, and freelance career paths — completely free, forever. No paywalls between a curious mind and technology. Start learning: {url}",
+    "textFacebook": "Every kid deserves to become a technology geek 💙 NextNTech.org teaches coding — HTML, CSS, JavaScript, Python, full-stack — 100% free, with quizzes, progress tracking and certificates. Share it with a young learner: {url}",
+    "textInstagram": "Free coding school in your pocket 📱 NextNTech.org — learn front-end, back-end & Python with simple lessons, visuals and quizzes. Free forever. Link: {url} #NextNTech #CodingForKids"
+  },
+  "footer": {
+    "tagline": "NextNTech.org — a non-profit. Free forever, for every curious mind."
+  },
+  "notFound": {
+    "title": "This page wandered off 🧭",
+    "body": "We couldn't find that page. Pick a course and keep learning!"
+  }
+}

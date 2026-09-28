@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+/* ───────── NextNTech design tokens (from docs/nextntech-demo-v3-1.jsx) ───────── */
+@theme {
+  --color-ink: #0e2258;
+  --color-lapis: #16337f;
+  --color-lapis-soft: #2a4bae;
+  --color-saffron: #f5a524;
+  --color-turquoise: #2ec4b6;
+  --color-paper: #f4f6fb;
+  --color-line: #dde3f0;
+  --color-body: #3a4666;
+  --color-green: #2e933c;
+  --color-red: #d64545;
+  --color-muted: #98a3c4;
+  --color-code: #9fd6ff;
+  --color-cream: #fff8e8;
+
+  /* Course colors */
+  --color-course-frontend: #2ec4b6;
+  --color-course-backend: #2a4bae;
+  --color-course-fullstack: #f5a524;
+  --color-course-python: #7c5cd6;
+  --color-course-mobile: #e4572e;
+  --color-course-career: #2e933c;
+
+  --font-sans: var(--font-nunito), "Segoe UI", system-ui, sans-serif;
+  --font-rtl: var(--font-vazirmatn), "Segoe UI", Tahoma, system-ui, sans-serif;
+  --font-mono: ui-monospace, Menlo, Consolas, monospace;
+}
+
+/*
+ * Course color flows through a CSS variable: set style={{ "--course": color }}
+ * on a container, then use these utilities anywhere inside it.
+ */
+@utility bg-course {
+  background-color: var(--course);
+}
+@utility text-course {
+  color: var(--course);
+}
+@utility border-course {
+  border-color: var(--course);
+}
+@utility border-t-course {
+  border-top-color: var(--course);
+}
+@utility border-s-course {
+  border-inline-start-color: var(--course);
+}
+/* ~8% tint (demo: color + "14") — hover state */
+@utility bg-course-tint {
+  background-color: color-mix(in srgb, var(--course) 8%, white);
+}
+/* ~13% tint (demo: color + "22") — selected state */
+@utility bg-course-tint-strong {
+  background-color: color-mix(in srgb, var(--course) 13%, white);
+}
+@utility shadow-course {
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--course) 20%, transparent);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-paper font-sans text-body antialiased;
+  }
+  [dir="rtl"] body {
+    font-family: var(--font-rtl);
+  }
+  /* Code is always left-to-right, even inside Dari/Pashto pages */
+  pre,
+  code,
+  kbd {
+    direction: ltr;
+    unicode-bidi: isolate;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-saffron);
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
