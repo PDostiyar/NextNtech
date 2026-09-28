@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 🔒 Report a security or child-safety problem
+    url: https://github.com/PDostiyar/NextNtech/security/advisories/new
+    about: Please report these privately, not as a public issue.

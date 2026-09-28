@@ -1,0 +1,21 @@
+name: ✨ Feature idea
+description: Suggest an improvement to the platform
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve for learners, parents or contributors?
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: Your idea
+  - type: checkboxes
+    id: rules
+    attributes:
+      label: Project rules
+      options:
+        - label: This keeps NextNTech free, ad-free and tracker-free
+          required: true
