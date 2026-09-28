@@ -1,0 +1,28 @@
+name: 🌍 Translation
+description: Improve Dari or Pashto text, or translate a lesson
+labels: ["i18n"]
+body:
+  - type: dropdown
+    id: language
+    attributes:
+      label: Language
+      options: [Dari (دری), Pashto (پښتو)]
+    validations:
+      required: true
+  - type: textarea
+    id: where
+    attributes:
+      label: Where is the text?
+      description: The page, or the key in messages/fa.json / messages/ps.json.
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Current text → suggested text
+  - type: checkboxes
+    id: native
+    attributes:
+      label: About you
+      options:
+        - label: I'm a native or fluent speaker of this language

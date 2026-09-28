@@ -1,116 +1,163 @@
-# NextNTech.org
+<div align="center">
+
+# ✴️ NextNTech.org
 
 **What's next in technology — for you and your kids.**
 
-NextNTech.org is a free, non-profit, ad-free coding education platform for kids and young
-people. No payment, subscription, or paywall ever stands between a learner and a lesson.
+A free, non-profit, ad-free coding school for kids and young people —
+in **English, Dari (دری) and Pashto (پښتو)**.
 
-- Project context and decisions: [`CLAUDE.md`](CLAUDE.md)
-- Build plan (six phases): [`docs/BUILD-PHASES.md`](docs/BUILD-PHASES.md)
-- Approved design prototype: [`docs/nextntech-demo-v3-1.jsx`](docs/nextntech-demo-v3-1.jsx)
+[Why we're building this](#-why-were-building-this) ·
+[What it does](#-what-learners-get) ·
+[Run it locally](#-run-it-locally) ·
+[Contribute](#-how-you-can-help) ·
+[Roadmap](#-roadmap)
 
-## Status
+</div>
 
-Phase 1 (foundation) is done: design system, three languages (English, Dari, Pashto with
-RTL), database schema, seeded curriculum, and the public pages (Home, Courses, Course
-detail, About). Lesson pages currently show the lesson text and visuals; playgrounds, video,
-audio and quizzes arrive in Phase 2.
+---
 
-## Tech stack
+## 💡 Why we're building this
 
-Next.js 15 (App Router, TypeScript strict) · Tailwind CSS v4 · PostgreSQL + Prisma 6 ·
-next-intl (en / fa / ps) · Zod · Vitest · Prettier + ESLint.
+> **Every kid deserves to become a technology geek.** No payment, no subscription, and no
+> paywall should ever stand between a curious young mind and learning to build the future.
 
-## Local setup
+Most good coding courses sit behind a paywall, are only in English, or are full of ads and
+trackers. That shuts out many of the kids who would benefit most — including families in
+Afghanistan and the Afghan diaspora who read Dari or Pashto first.
 
-Prerequisites: Node.js 20+, Docker Desktop (for Postgres), Git.
+NextNTech.org is the education arm of the **#NextNTech** channels (YouTube, Facebook,
+TikTok). The goal is simple:
+
+- **Free forever.** Every course, quiz and certificate. No ads, no upsells.
+- **Made for kids.** Short lessons, friendly visuals, hands-on practice, instant feedback.
+- **In their language.** Full right-to-left support for Dari and Pashto, not an afterthought.
+- **Safe by design.** Minimal data, parental consent for under-13s, no trackers, no
+  messaging between users.
+- **Start anywhere.** Curious about servers? Jump straight into Back-End. No locked order.
+
+## 🎓 What learners get
+
+Six learning paths, each with its own color:
+
+|     | Course                        | What you learn                                               |
+| --- | ----------------------------- | ------------------------------------------------------------ |
+| 🎨  | **Front-End Development**     | HTML, CSS, JavaScript, React                                 |
+| ⚙️  | **Back-End Development**      | Node.js, Express, SQL, PHP & Laravel, WordPress              |
+| 🚀  | **Full-Stack Development**    | Connecting front and back, logins, deploying, a capstone     |
+| 🐍  | **Python: Basic to Advanced** | From `print()` to Flask, APIs and data                       |
+| 📱  | **Mobile Apps**               | React Native, Swift & iOS, publishing to app stores          |
+| 💼  | **Careers & Side Hustles**    | Portfolios, Fiverr/Upwork, remote jobs, working with clients |
+
+Every lesson has the same shape:
+
+1. 📖 **Read** — short text with visuals that stick
+2. 🎬🔊 **Watch & listen** — a short video, and narration in a woman's or man's voice
+3. 🧪 **Practice** — a live playground (HTML preview, real Python, a SQL database, and more)
+4. ✅ **Answer** — 3–5 quiz questions with explanations, saved to your profile
+5. 🏅 **Achieve** — streaks, daily goals, and a named certificate for each course
+
+The full course plan is in [`docs/NextNTech-Curriculum-Outline.md`](docs/NextNTech-Curriculum-Outline.md).
+
+## 🚦 Project status
+
+We're building in six phases ([`docs/BUILD-PHASES.md`](docs/BUILD-PHASES.md)):
+
+| Phase | What                                                                       | Status  |
+| ----- | -------------------------------------------------------------------------- | ------- |
+| 1     | Foundation: design system, 3 languages + RTL, database, course pages       | ✅ Done |
+| 2     | Lessons: playgrounds, video, audio, server-graded quizzes, streaks         | 🔜 Next |
+| 3     | Accounts: social + email login, under-13 parental consent                  | ⏳      |
+| 4     | Dashboard, PDF certificates with public verification, invite sharing       | ⏳      |
+| 5     | Admin area: edit courses, lessons, quizzes and translations in the browser | ⏳      |
+| 6     | Accessibility, SEO, legal pages, CI, deployment                            | ⏳      |
+
+Today: 6 courses, 24 modules, and **14 fully written lessons** (at least two per course).
+The rest of the modules show as "Coming soon".
+
+## 🛠 Tech stack
+
+| Area               | Choice                                                                                    |
+| ------------------ | ----------------------------------------------------------------------------------------- |
+| App                | [Next.js 15](https://nextjs.org) (App Router, React Server Components), TypeScript strict |
+| Styling            | [Tailwind CSS v4](https://tailwindcss.com) with the NextNTech design tokens               |
+| Database           | PostgreSQL 16 + [Prisma](https://www.prisma.io)                                           |
+| Languages          | [next-intl](https://next-intl.dev) — `en`, `fa` (Dari), `ps` (Pashto), RTL for fa/ps      |
+| Validation / tests | Zod · Vitest · (Playwright from Phase 2)                                                  |
+| Coming next        | Auth.js v5, CodeMirror 6, Pyodide, sql.js, pdf-lib, Resend                                |
+
+It's **one deployable app** — no separate CMS server. Lessons live in Postgres and will be
+edited through a built-in admin area.
+
+## 🚀 Run it locally
+
+You need **Node.js 20+**, **Git**, and **Docker Desktop** (or your own PostgreSQL 16).
 
 ```bash
-# 1. Install dependencies (also generates the Prisma client)
-npm install
+git clone https://github.com/PDostiyar/NextNtech.git
+cd NextNtech
 
-# 2. Environment variables
-cp .env.example .env
-
-# 3. Start PostgreSQL 16
-docker compose up -d
-
-# 4. Create the tables and load the courses
-npx prisma migrate dev
-npx prisma db seed
-
-# 5. Run the site
-npm run dev
+npm install                 # installs packages and generates the Prisma client
+cp .env.example .env        # default values work with docker compose
+docker compose up -d        # starts PostgreSQL on localhost:5432
+npx prisma migrate dev      # creates the tables
+npx prisma db seed          # loads the courses and lessons
+npm run dev                 # http://localhost:3000
 ```
 
-Open http://localhost:3000 — it redirects to `/en`. Switch languages with the EN / دری / پښتو
-buttons, or go directly to `/fa` or `/ps`.
+Open http://localhost:3000 — it redirects to `/en`. Try `/fa` and `/ps` for Dari and Pashto.
 
-> Already have Postgres installed? Skip Docker and point `DATABASE_URL` in `.env` at your
-> own database.
+> Using your own Postgres instead of Docker? Just point `DATABASE_URL` in `.env` at it.
 
-## Scripts
+### Everyday commands
 
-| Command                           | What it does                              |
-| --------------------------------- | ----------------------------------------- |
-| `npm run dev`                     | Development server on :3000               |
-| `npm run build` / `npm start`     | Production build / serve it               |
-| `npm run lint`                    | ESLint                                    |
-| `npm run typecheck`               | TypeScript, no emit                       |
-| `npm test`                        | Vitest unit tests                         |
-| `npm run format` / `format:check` | Prettier                                  |
-| `npm run db:migrate`              | `prisma migrate dev`                      |
-| `npm run db:seed`                 | Load/refresh courses, modules and lessons |
-| `npm run db:studio`               | Browse the database in Prisma Studio      |
+| Command                                           | What it does                                                             |
+| ------------------------------------------------- | ------------------------------------------------------------------------ |
+| `npm run dev`                                     | Development server with hot reload                                       |
+| `npm run lint` · `npm run typecheck` · `npm test` | The checks every pull request must pass                                  |
+| `npm run format`                                  | Auto-format with Prettier                                                |
+| `npm run db:seed`                                 | Reload course content after editing files in `content/` (safe to re-run) |
+| `npm run db:studio`                               | Browse the database in your browser                                      |
+| `npm run build` · `npm start`                     | Production build and server                                              |
 
-The seed is safe to re-run: it updates content in place by slug and never deletes learner
-data.
-
-## Project structure
+## 🗂 Where things live
 
 ```
-app/[locale]/        pages (Home, courses, course detail, lesson, about, …)
-components/ui/       design system: Star8, Logo, Button, Card, PathCard, CodeBox
-components/layout/   Nav (with language switcher), Footer, ShareButton (invite dialog)
-components/visuals/  lesson visuals: WebTrio, TagAnatomy, BoxModel, ClientServer, TableVisual
-components/lesson/   lesson block renderer
-content/             seed curriculum (all 6 courses, 24 modules, 14 written lessons)
-i18n/                next-intl routing and request config
-lib/                 server logic: database client, content queries, lesson block schema
-messages/            UI strings: en.json, fa.json (Dari), ps.json (Pashto)
-prisma/              schema, migrations, seed
-tests/               Vitest unit tests
+app/[locale]/        pages: home, courses, course detail, lesson, about, …
+components/ui/       design system: Star8 logo, Button, Card, PathCard, CodeBox
+components/layout/   Nav + language switcher, Footer, share/invite dialog
+components/visuals/  lesson illustrations: WebTrio, TagAnatomy, BoxModel, ClientServer, TableVisual
+components/lesson/   renders a lesson's content blocks
+content/             course and lesson content (seeded into the database)
+messages/            interface text: en.json, fa.json (Dari), ps.json (Pashto)
+lib/                 server code: database client, content queries, lesson format
+prisma/              database schema, migrations, seed script
+tests/               unit tests
+docs/                product spec, architecture, curriculum, build phases, approved design
 ```
 
-### Lesson content format
+## 🤝 How you can help
 
-A lesson body is an ordered array of typed blocks, validated by Zod
-(`lib/lesson-blocks.ts`):
+NextNTech is built to welcome contributors — **you don't have to be a programmer**:
 
-```json
-[
-  { "type": "paragraph", "text": "HTML is the **skeleton** of the web. Try `<h1>`." },
-  { "type": "visual", "name": "TagAnatomy" },
-  { "type": "code", "language": "html", "code": "<h1>Hello!</h1>" },
-  { "type": "callout", "tone": "tip", "text": "Tags come in pairs." },
-  { "type": "heading", "text": "Next up" }
-]
-```
+- ✍️ **Write lessons** — pick a "Coming soon" module from the curriculum
+- 🌍 **Translate** — review or improve Dari and Pashto, or translate lessons
+- 🎨 **Design visuals** — friendly diagrams that explain one idea well
+- 🐞 **Report bugs** — especially on phones and in right-to-left languages
+- 💻 **Write code** — pick an issue labelled `good first issue`
 
-Text supports `**bold**`, `*italic*` and `` `code` `` only — raw HTML is never rendered.
-Visuals are referenced by name from `components/visuals/`.
+Start with **[CONTRIBUTING.md](CONTRIBUTING.md)** — it explains step by step what to
+change and where. Please also read our [Code of Conduct](CODE_OF_CONDUCT.md). Found a
+security or child-safety problem? See [SECURITY.md](SECURITY.md) and report it privately.
 
-### Design system
+## 🗺 Roadmap
 
-Colors from the demo live in `app/globals.css` as Tailwind tokens (`bg-ink`, `text-saffron`,
-`border-line`, …). Each course's color flows through a `--course` CSS variable, with
-`bg-course`, `text-course`, `border-course`, `bg-course-tint` (8%) and
-`bg-course-tint-strong` (13%) utilities. Layouts use logical properties (`ms-`, `pe-`,
-`start-`, `border-s-`) so Dari and Pashto mirror automatically; code always stays LTR.
+After the six build phases: complete the Front-End and Python courses first, then launch;
+record a short video for every lesson; generate narration audio in both voices; translate
+lessons into Dari and Pashto, one at a time; add the remaining courses with volunteer
+authors. See [`docs/NextNTech-Complete-Project-Package.md`](docs/NextNTech-Complete-Project-Package.md)
+for the full product plan.
 
-## Translations
+## 📄 License
 
-UI strings live in `messages/*.json`. The Dari and Pashto files start from the demo's `STR`
-object; strings added since then are drafts and **need review by a native speaker**. Any
-missing Dari/Pashto key falls back to English automatically. Lesson content is English for
-now (the `LessonTranslation` table is ready for translated lessons).
+Code is released under the [MIT License](LICENSE) © 2026 Pervaiz Dostiyar.
