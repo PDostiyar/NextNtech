@@ -146,6 +146,7 @@ NextNTech is built to welcome contributors — **you don't have to be a programm
 - 🐞 **Report bugs** — especially on phones and in right-to-left languages
 - 💻 **Write code** — pick an issue labelled `good first issue`
 
+All contributions go to the **`stage`** branch; tested releases are merged into `main`.
 Start with **[CONTRIBUTING.md](CONTRIBUTING.md)** — it explains step by step what to
 change and where. Please also read our [Code of Conduct](CODE_OF_CONDUCT.md). Found a
 security or child-safety problem? See [SECURITY.md](SECURITY.md) and report it privately.

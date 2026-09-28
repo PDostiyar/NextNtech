@@ -17,6 +17,8 @@
 
 ## Checklist
 
+- [ ] This pull request targets the `stage` branch (not `main`)
+
 - [ ] `npm run lint`, `npm run typecheck` and `npm test` pass
 - [ ] Formatted with `npm run format`
 - [ ] Checked in English, Dari (`/fa`) and Pashto (`/ps`), at phone width and desktop

@@ -50,6 +50,7 @@ You need **Node.js 20+**, **Git**, and **Docker Desktop** (or your own PostgreSQ
 # Fork the repo on GitHub first, then:
 git clone https://github.com/<your-username>/NextNtech.git
 cd NextNtech
+git checkout stage     # all work starts from the stage branch
 
 npm install
 cp .env.example .env
@@ -64,9 +65,23 @@ else is using port 5432 or 3000.
 
 ## 4. The contribution workflow
 
+We use two long-lived branches:
+
+| Branch  | Purpose                                           | Who merges into it                                   |
+| ------- | ------------------------------------------------- | ---------------------------------------------------- |
+| `stage` | Where all new work lands and gets tested together | Maintainers, after review                            |
+| `main`  | The live website — only tested, approved releases | Maintainers, via a release pull request from `stage` |
+
+**Always branch from `stage` and open your pull request against `stage`** — never against
+`main`.
+
+```
+your-branch ──PR──▶ stage ──(tested, approved release PR)──▶ main ──▶ nextntech.org
+```
+
 1. **Find or open an issue** describing what you'll do. Comment "I'd like to work on this"
    so others know.
-2. **Create a branch** from `main` with a short, descriptive name:
+2. **Create a branch** from `stage` with a short, descriptive name:
    `lesson/python-loops`, `fix/nav-overflow-mobile`, `i18n/pashto-review`.
 3. **Make your change.** Keep each pull request focused on one thing.
 4. **Run the checks** — the same ones CI runs:
@@ -80,7 +95,7 @@ else is using port 5432 or 3000.
    (375px) and desktop.
 6. **Commit** with a clear message saying what changed and why, e.g.
    `Add Python lesson: loops with for and while`.
-7. **Open a pull request** against `main` and fill in the template. Include screenshots for
+7. **Open a pull request** against `stage` and fill in the template. Include screenshots for
    anything visual.
 8. A maintainer will review. Small follow-up changes are normal — they're part of making
    lessons great for kids.

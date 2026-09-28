@@ -16,8 +16,12 @@ Principle: no payment, subscription, or paywall ever stands between a learner an
 
 Where this CLAUDE.md and the docs disagree, THIS FILE WINS (it contains later decisions).
 
-## Repository
+## Repository & branching
 - GitHub repo already exists: PDostiyar/NextNtech. Do not create a new repo; push to it.
+- `stage` is the integration branch: all work (yours and community contributions) is
+  branched from `stage` and merged back via pull request into `stage`.
+- `main` is production and protected. It only receives release pull requests from
+  `stage` after testing and the maintainer's approval. Never target `main` directly.
 
 ## Tech stack (decided)
 - Next.js 15, App Router, TypeScript (strict), React Server Components by default
