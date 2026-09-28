@@ -1,0 +1,26 @@
+name: ✍️ Lesson idea or draft
+description: Suggest or write a lesson (no coding needed)
+labels: ["content"]
+body:
+  - type: input
+    id: course
+    attributes:
+      label: Course and module
+      placeholder: e.g. Python — Advanced Python — Classes and objects
+    validations:
+      required: true
+  - type: textarea
+    id: lesson
+    attributes:
+      label: Lesson text
+      description: Short sentences, one idea per paragraph. Include a code example if it helps.
+  - type: textarea
+    id: practice
+    attributes:
+      label: Practice idea
+      description: What should the learner try in the playground?
+  - type: textarea
+    id: quiz
+    attributes:
+      label: Quiz questions (3–5)
+      description: For each question, list the options, mark the correct one, and add a short explanation.
