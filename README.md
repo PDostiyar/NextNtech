@@ -10,6 +10,7 @@ in **English, Dari (دری) and Pashto (پښتو)**.
 [Why we're building this](#-why-were-building-this) ·
 [What it does](#-what-learners-get) ·
 [Run it locally](#-run-it-locally) ·
+[Preview & hosting](#-hosting) ·
 [Contribute](#-how-you-can-help) ·
 [Roadmap](#-roadmap)
 
@@ -119,6 +120,25 @@ Open http://localhost:3000 — it redirects to `/en`. Try `/fa` and `/ps` for Da
 | `npm run db:seed`                                 | Reload course content after editing files in `content/` (safe to re-run) |
 | `npm run db:studio`                               | Browse the database in your browser                                      |
 | `npm run build` · `npm start`                     | Production build and server                                              |
+
+## 👀 Preview it in your browser (no install)
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/PDostiyar/NextNtech?ref=stage)
+
+Click the button (or **Code → Codespaces → Create codespace on stage**). In 3–5 minutes
+the site is running in the cloud with its own database and all the courses loaded. To show
+someone, make port **3000** public in the **Ports** tab and share the link. It's a
+temporary preview — it sleeps when you stop using it.
+
+## 🌍 Hosting
+
+NextNTech is a **Node.js app with a PostgreSQL database**. On cPanel, choose
+**AI App Hosting (Node.js from Git)** — not WordPress, Sitejet or "Custom Code".
+
+**[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)** walks through it step by step: creating the
+database, connecting the GitHub repo, build and start commands, environment variables, a
+`stage.nextntech.org` copy for testing, troubleshooting, and the Vercel + Neon
+alternative.
 
 ## 🗂 Where things live
 

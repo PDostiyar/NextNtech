@@ -44,6 +44,10 @@ maintainer will turn it into code.
 
 ## 3. Set up your computer
 
+> **Don't want to install anything?** Open the repo in **GitHub Codespaces** (green **Code**
+> button → **Codespaces** → **Create codespace on stage**). Everything below is done for
+> you automatically. See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md#1-quick-temporary-preview-github-codespaces).
+
 You need **Node.js 20+**, **Git**, and **Docker Desktop** (or your own PostgreSQL 16).
 
 ```bash

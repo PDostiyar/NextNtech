@@ -1,0 +1,25 @@
+# Used by GitHub Codespaces / VS Code Dev Containers.
+# The app container shares the database's network, so "localhost:5432" works
+# exactly like local development with the root docker-compose.yml.
+services:
+  app:
+    image: mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm
+    volumes:
+      - ../..:/workspaces:cached
+    command: sleep infinity
+    network_mode: service:db
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: nextntech
+      POSTGRES_PASSWORD: nextntech
+      POSTGRES_DB: nextntech
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
