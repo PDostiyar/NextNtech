@@ -57,12 +57,22 @@ cd NextNtech
 git checkout stage     # all work starts from the stage branch
 
 npm install
-cp .env.example .env
+cp .env.example .env     # then fill in the values (see below)
 docker compose up -d
 npx prisma migrate dev
 npx prisma db seed
 npm run dev              # open http://localhost:3000
 ```
+
+Before `docker compose up -d`, open `.env` and set the local values (throwaway, local-only
+credentials from `docker-compose.yml`):
+
+```bash
+DATABASE_URL=postgresql://nextntech:nextntech@localhost:5432/nextntech?schema=public
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+```
+
+Never commit your `.env` file — this repository is public.
 
 If something fails, check that Docker is running (`docker compose ps`) and that nothing
 else is using port 5432 or 3000.

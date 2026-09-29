@@ -1,0 +1,85 @@
+name: CI
+
+on:
+  push:
+    branches: [main, stage]
+  pull_request:
+    branches: [main, stage]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Lint, typecheck, test, build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: nextntech
+          POSTGRES_PASSWORD: nextntech
+          POSTGRES_DB: nextntech
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U nextntech -d nextntech"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      # Throwaway CI database — not a secret.
+      DATABASE_URL: postgresql://nextntech:nextntech@localhost:5432/nextntech?schema=public
+      NEXT_PUBLIC_SITE_URL: http://localhost:3000
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Format check
+        run: npm run format:check
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Database migrations and seed
+        run: |
+          npx prisma migrate deploy
+          npx prisma db seed
+
+      - name: Build
+        run: npm run build
+
+      - name: Smoke test (production server)
+        run: |
+          npm start -- -p 3000 &
+          for i in $(seq 1 30); do
+            curl -sf -o /dev/null http://localhost:3000/en && break
+            sleep 1
+          done
+          for path in /en /fa /ps /en/courses /fa/courses/python /en/about \
+                      /en/courses/front-end-development/html-the-skeleton-of-every-website; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "http://localhost:3000$path")
+            echo "$path -> $code"
+            test "$code" = 200
+          done

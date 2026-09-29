@@ -8,6 +8,10 @@ services:
       - ../..:/workspaces:cached
     command: sleep infinity
     network_mode: service:db
+    # Throwaway development values — this database only exists inside the Codespace.
+    environment:
+      DATABASE_URL: postgresql://nextntech:nextntech@localhost:5432/nextntech?schema=public
+      NEXT_PUBLIC_SITE_URL: http://localhost:3000
     depends_on:
       - db
 

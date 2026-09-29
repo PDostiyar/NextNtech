@@ -5,5 +5,9 @@ import type { ReactNode } from "react";
  * <bdi> isolates its direction so punctuation stays correct in Dari/Pashto.
  */
 export function En({ children }: { children: ReactNode }) {
-  return <bdi lang="en">{children}</bdi>;
+  return (
+    <bdi lang="en" dir="ltr">
+      {children}
+    </bdi>
+  );
 }
