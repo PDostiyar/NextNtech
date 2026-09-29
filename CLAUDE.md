@@ -1,5 +1,31 @@
 # NextNTech.org — Project Context for Claude Code
 
+@docs/AI-WORKFLOW-PROMPT.md
+
+## Project facts
+
+```text
+Project name:        NextNTech.org
+GitHub repo:         PDostiyar/NextNtech  (PUBLIC — never commit secrets, server paths,
+                     usernames, emails or internal hostnames)
+Project type:        Next.js/Node.js
+Tech stack:          Next.js 15 + React 19 + TypeScript + Tailwind CSS v4 + Prisma 6 + next-intl
+Database:            PostgreSQL (cPanel) — one database per environment
+Production URL:      https://nextntech.org          ← deploys branch `main`
+Staging URL:         https://stage.nextntech.org    ← deploys branch `staging`
+Hosting:             cPanel (AI App Hosting / Node.js apps, PostgreSQL, Git Version Control, Terminal)
+Secrets needed:      DATABASE_URL
+Config (not secret): NEXT_PUBLIC_SITE_URL
+Later phases:        AUTH_SECRET, AUTH_GOOGLE_ID, AUTH_GOOGLE_SECRET, AUTH_FACEBOOK_ID,
+                     AUTH_FACEBOOK_SECRET, AUTH_LINKEDIN_ID, AUTH_LINKEDIN_SECRET,
+                     AUTH_MICROSOFT_ENTRA_ID_ID, AUTH_MICROSOFT_ENTRA_ID_SECRET,
+                     AUTH_MICROSOFT_ENTRA_ID_ISSUER, RESEND_API_KEY, BLOB_READ_WRITE_TOKEN
+```
+
+**Repo notes:** the working branch is **`staging`** (the default branch; renamed from `stage`
+on 2026-09-29). The staging site is `stage.nextntech.org`. Unlike the workflow's default,
+this repo is **public** and open to community contributions (see CONTRIBUTING.md).
+
 ## Mission
 NextNTech.org is a free, non-profit, ad-free coding education platform for kids and
 young people. Tagline: "What's next in technology — for you and your kids."
@@ -18,15 +44,16 @@ Where this CLAUDE.md and the docs disagree, THIS FILE WINS (it contains later de
 
 ## Repository & branching
 - GitHub repo already exists: PDostiyar/NextNtech. Do not create a new repo; push to it.
-- `stage` is the integration branch: all work (yours and community contributions) is
-  branched from `stage` and merged back via pull request into `stage`.
+- `staging` is the integration branch: all work (yours and community contributions) is
+  branched from `staging` and merged back via pull request into `staging`.
 - `main` is production and protected. It only receives release pull requests from
-  `stage` after testing and the maintainer's approval. Never target `main` directly.
+  `staging` after testing and the maintainer's approval. Never target `main` directly.
+- After a `staging` → `main` merge, fast-forward `staging` to `main` so both point at the same commit.
 
 ## Tech stack (decided)
 - Next.js 15, App Router, TypeScript (strict), React Server Components by default
 - Tailwind CSS v4 with design tokens from the demo (see Design System below)
-- PostgreSQL + Prisma ORM. Local: Docker Compose. Hosted: Neon or Supabase Postgres
+- PostgreSQL + Prisma ORM. Local: Docker Compose. Hosted: cPanel PostgreSQL (Neon/Supabase as fallback)
 - Auth.js v5 (next-auth) with Prisma adapter. Providers: Google, Facebook, LinkedIn,
   Microsoft Entra ID (personal + work accounts, covers Outlook/Hotmail), and
   email + password (Credentials, bcrypt). Database sessions where possible.
@@ -94,6 +121,6 @@ Rules:
 - Secrets only in env vars. Maintain .env.example with every variable documented.
 - Write tests for grading, streak calculation, certificate eligibility, and the
   under-13 consent flow.
-- After each phase: run lint, typecheck, and tests; fix everything; update README.md;
-  commit with a clear message; push to GitHub.
+- After each phase: run lint, typecheck, and tests; fix everything; update README.md
+  (the relevant section AND the Feature log); commit with a clear message; push to GitHub.
 - Ask me before: adding a paid service, changing the stack, or deleting data/migrations.
