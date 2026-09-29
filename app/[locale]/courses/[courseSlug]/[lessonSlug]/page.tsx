@@ -44,9 +44,9 @@ export default async function LessonPage({ params }: Props) {
       <div className="text-[13px] font-extrabold tracking-wider text-course">
         {t("eyebrow", { n: lesson.module.order + 1 })} · <En>{lesson.module.title.toUpperCase()}</En>
       </div>
-      <h1 className="mt-1.5 mb-3.5 text-[28px] font-extrabold text-ink">
-        <En>{lesson.title}</En>
-      </h1>
+      <En as="h1" className="mt-1.5 mb-3.5 text-[28px] font-extrabold text-ink">
+        {lesson.title}
+      </En>
 
       {locale !== "en" && (
         <div className="mb-3 rounded-[10px] border border-saffron bg-cream px-3.5 py-2.5 text-[13px]">

@@ -31,12 +31,12 @@ export default async function CoursesPage({ params }: Props) {
                 {c.emoji}
               </div>
               <div className="min-w-[200px] flex-1">
-                <h2 className="text-lg font-extrabold text-ink">
-                  <En>{c.title}</En>
-                </h2>
-                <p className="mt-1 text-sm">
-                  <En>{c.modules.map((m) => m.title).join(" · ")}</En>
-                </p>
+                <En as="h2" className="text-lg font-extrabold text-ink">
+                  {c.title}
+                </En>
+                <En as="p" className="mt-1 text-sm">
+                  {c.modules.map((m) => m.title).join(" · ")}
+                </En>
               </div>
               <span className="inline-flex items-center rounded-xl bg-course px-4 py-2.5 text-[15px] font-bold text-white">
                 {t("start")}

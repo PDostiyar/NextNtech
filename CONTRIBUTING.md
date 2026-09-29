@@ -256,8 +256,9 @@ match its look and feel.
   `bg-course-tint` (8%) and `bg-course-tint-strong` (13%).
 - **Right-to-left:** always use logical classes — `ms-`/`me-`, `ps-`/`pe-`,
   `start-`/`end-`, `border-s-`, `text-start` — **never** `ml-`, `mr-`, `left-`, `right-`
-  or `text-left`. Wrap English text from the database in `<En>` so punctuation stays
-  correct on Dari/Pashto pages.
+  or `text-left`. Wrap English text from the database in `<En>` so it reads correctly on
+  Dari/Pashto pages: use `<En as="p">…</En>` (or `h1`, `h2`…) when the whole element is
+  English, and plain `<En>` only for a short English phrase inside translated text.
 - **Mobile first:** everything must work at 375px width with no sideways scrolling.
 - Rounded corners 12–16px, generous padding, friendly tone.
 
