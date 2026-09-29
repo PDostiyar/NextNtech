@@ -12,7 +12,7 @@ Project type:        Next.js/Node.js
 Tech stack:          Next.js 15 + React 19 + TypeScript + Tailwind CSS v4 + Prisma 6 + next-intl
 Database:            PostgreSQL (cPanel) — one database per environment
 Production URL:      https://nextntech.org          ← deploys branch `main`
-Staging URL:         https://stage.nextntech.org    ← deploys branch `stage`
+Staging URL:         https://stage.nextntech.org    ← deploys branch `staging`
 Hosting:             cPanel (AI App Hosting / Node.js apps, PostgreSQL, Git Version Control, Terminal)
 Secrets needed:      DATABASE_URL
 Config (not secret): NEXT_PUBLIC_SITE_URL
@@ -22,10 +22,9 @@ Later phases:        AUTH_SECRET, AUTH_GOOGLE_ID, AUTH_GOOGLE_SECRET, AUTH_FACEB
                      AUTH_MICROSOFT_ENTRA_ID_ISSUER, RESEND_API_KEY, BLOB_READ_WRITE_TOKEN
 ```
 
-**Exception to the workflow:** this repo's working branch is named **`stage`**, not
-`staging`. Wherever `docs/AI-WORKFLOW-PROMPT.md` says `staging`, read `stage`. The staging
-site is still `stage.nextntech.org`. Unlike the workflow's default, this repo is public and
-open to community contributions (see CONTRIBUTING.md).
+**Repo notes:** the working branch is **`staging`** (the default branch; renamed from `stage`
+on 2026-09-29). The staging site is `stage.nextntech.org`. Unlike the workflow's default,
+this repo is **public** and open to community contributions (see CONTRIBUTING.md).
 
 ## Mission
 NextNTech.org is a free, non-profit, ad-free coding education platform for kids and
@@ -45,11 +44,11 @@ Where this CLAUDE.md and the docs disagree, THIS FILE WINS (it contains later de
 
 ## Repository & branching
 - GitHub repo already exists: PDostiyar/NextNtech. Do not create a new repo; push to it.
-- `stage` is the integration branch: all work (yours and community contributions) is
-  branched from `stage` and merged back via pull request into `stage`.
+- `staging` is the integration branch: all work (yours and community contributions) is
+  branched from `staging` and merged back via pull request into `staging`.
 - `main` is production and protected. It only receives release pull requests from
-  `stage` after testing and the maintainer's approval. Never target `main` directly.
-- After a `stage` → `main` merge, fast-forward `stage` to `main` so both point at the same commit.
+  `staging` after testing and the maintainer's approval. Never target `main` directly.
+- After a `staging` → `main` merge, fast-forward `staging` to `main` so both point at the same commit.
 
 ## Tech stack (decided)
 - Next.js 15, App Router, TypeScript (strict), React Server Components by default

@@ -10,7 +10,7 @@ diaspora who read Dari or Pashto first — and is open to community contributors
 | Environment | URL                                                                      | Git branch | Hosting                                          |
 | ----------- | ------------------------------------------------------------------------ | ---------- | ------------------------------------------------ |
 | Production  | https://nextntech.org                                                    | `main`     | cPanel → Node.js app (AI App Hosting)            |
-| Staging     | https://stage.nextntech.org                                              | `stage`    | cPanel → Node.js app (AI App Hosting)            |
+| Staging     | https://stage.nextntech.org                                              | `staging`  | cPanel → Node.js app (AI App Hosting)            |
 | Repo        | [github.com/PDostiyar/NextNtech](https://github.com/PDostiyar/NextNtech) | –          | **public** · MIT license · contributions welcome |
 
 > The hosted sites are not live yet — see [§5 Deploying](#5-deploying-hosting) and
@@ -84,7 +84,7 @@ other modules show "Coming soon".
 
 ## Table of contents
 
-1. [Workflow: stage → production](#1-workflow-stage--production)
+1. [Workflow: staging → production](#1-workflow-staging--production)
 2. [Tech stack](#2-tech-stack)
 3. [Run it locally](#3-run-it-locally)
 4. [Configuration and secrets](#4-configuration-and-secrets)
@@ -101,14 +101,14 @@ other modules show "Coming soon".
 15. [Troubleshooting](#15-troubleshooting)
 16. [Feature log](#16-feature-log)
 
-## 1. Workflow: stage → production
+## 1. Workflow: staging → production
 
 ```text
  AI chat (Claude Code), a contributor's      GitHub Codespaces (quick preview /
  pull request, or a manual edit              review only)
             │                                      │
             ▼                                      ▼
-   ┌───────────────── GitHub branch: stage ─────────────────┐
+   ┌───────────────── GitHub branch: staging ─────────────────┐
    └───────────────────────────┬────────────────────────────┘
                                │ deploy (pull + build)
                                ▼
@@ -116,7 +116,7 @@ other modules show "Coming soon".
         staging database · test keys
                                │  owner reviews and approves
                                ▼
-          GitHub Pull Request: stage → main  (CI must be green)
+          GitHub Pull Request: staging → main  (CI must be green)
                                │ merge
                                ▼
    ┌───────────────── GitHub branch: main ──────────────────┐
@@ -129,11 +129,11 @@ other modules show "Coming soon".
 
 Notes for this repo:
 
-- The working branch is **`stage`** (the shared workflow calls it `staging`). It's the
-  default branch; every change lands there first.
-- **`main`** only changes by merging a reviewed pull request from `stage`, with green CI.
-  After each release, `stage` is fast-forwarded to `main`.
-- **Community contributors** fork the repo and open pull requests into `stage` — see
+- The working branch is **`staging`** — the default branch; every change lands there
+  first. The staging _website_ is `stage.nextntech.org` (workflow naming rule).
+- **`main`** only changes by merging a reviewed pull request from `staging`, with green CI.
+  After each release, `staging` is fast-forwarded to `main`.
+- **Community contributors** fork the repo and open pull requests into `staging` — see
   [CONTRIBUTING.md](CONTRIBUTING.md).
 - Staging and production each have their **own database and credentials**. Staging never
   uses production data.
@@ -232,7 +232,7 @@ PostgreSQL 16).
 ```bash
 git clone https://github.com/PDostiyar/NextNtech.git
 cd NextNtech
-git checkout stage                 # all work starts from stage
+git checkout staging                 # all work starts from staging
 
 npm install                        # installs packages and generates the Prisma client
 cp .env.example .env               # then set the two values below
@@ -304,7 +304,7 @@ in **[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)**.
    (strong generated password, **ALL PRIVILEGES**) per environment, e.g. `…_nnt_staging`
    and `…_nnt_prod`. Choose PostgreSQL, not MariaDB.
 4. **App:** cPanel → **AI App Hosting** → pick the domain → connect GitHub repo
-   `PDostiyar/NextNtech` → branch **`stage`** (staging) or **`main`** (production):
+   `PDostiyar/NextNtech` → branch **`staging`** (staging) or **`main`** (production):
    - Node.js: **22** (or 20)
    - Install: `npm ci`
    - Build: `npx prisma migrate deploy && npm run build`
@@ -317,8 +317,8 @@ ever becomes private, add a read-only deploy key — see the workflow doc §4.1.
 
 **Updating after a merge:** press **Redeploy** in AI App Hosting (or Git Version Control →
 **Update from Remote**, then `npm ci && npx prisma migrate deploy && npm run build` in the
-app's environment, then **Restart**). Deploy `stage` first, check
-`stage.nextntech.org`, then merge `stage` → `main` and deploy production.
+app's environment, then **Restart**). Deploy `staging` first, check
+`stage.nextntech.org`, then merge `staging` → `main` and deploy production.
 
 **Before a production deploy that changes the database:** back up first —
 `pg_dump "$DATABASE_URL" > backup-$(date +%F).sql` in the cPanel terminal, or cPanel →
@@ -327,7 +327,7 @@ app's environment, then **Restart**). Deploy `stage` first, check
 **Rollback:**
 
 1. **Code:** on GitHub, open the release pull request → **Revert** → merge the revert into
-   `main` (and `stage`), then redeploy. Or in AI App Hosting redeploy the previous commit
+   `main` (and `staging`), then redeploy. Or in AI App Hosting redeploy the previous commit
    if your host offers it.
 2. **Database:** Prisma migrations only move forward. If a migration broke data, restore
    the backup: `psql "$DATABASE_URL" < backup-YYYY-MM-DD.sql` (ask before doing this on
@@ -335,11 +335,11 @@ app's environment, then **Restart**). Deploy `stage` first, check
 
 ## 6. Preview in GitHub Codespaces
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/PDostiyar/NextNtech?ref=stage)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/PDostiyar/NextNtech?ref=staging)
 
 A second, temporary way to see the site — no install, no hosting:
 
-1. Click the button (or **Code → Codespaces → Create codespace on stage**).
+1. Click the button (or **Code → Codespaces → Create codespace on staging**).
 2. Wait 3–5 minutes. The `.devcontainer/` setup installs packages, starts PostgreSQL,
    creates the tables, loads the courses and runs `npm run dev`. A browser tab opens on
    port **3000**.
@@ -490,7 +490,7 @@ recipes:
 
 Then run `npm run format && npm run lint && npm run typecheck && npm test`, check the page
 in English, Dari and Pashto at phone width, update this README (section + Feature log),
-and open a pull request into `stage`.
+and open a pull request into `staging`.
 
 **How you can help (contributors welcome):** ✍️ write lessons · 🌍 review Dari/Pashto ·
 🎨 design visuals · 🐞 report bugs (especially on phones and in RTL) · 💻 pick a
@@ -507,11 +507,11 @@ same process automatically.
 1. **Ask** in plain language, e.g. _"Add the next Python lesson from the curriculum
    outline, with a playground and 5 quiz questions."_ Build work follows the phase prompts
    in [`docs/BUILD-PHASES.md`](docs/BUILD-PHASES.md) — say _"Phase 2"_ to start the next one.
-2. **Review:** the AI works on `stage` (or a branch with a pull request into `stage`), runs
+2. **Review:** the AI works on `staging` (or a branch with a pull request into `staging`), runs
    the checks, updates this README, and tells you what changed and what to check on
    `stage.nextntech.org`.
 3. **Approve:** when staging looks right, tell the AI to open (or merge) the
-   `stage` → `main` pull request. It never touches `main` without your OK.
+   `staging` → `main` pull request. It never touches `main` without your OK.
 
 ## 12. Database
 
@@ -528,11 +528,11 @@ same process automatically.
 
 ## 13. Testing checklist
 
-Before merging `stage` → `main`:
+Before merging `staging` → `main`:
 
 - [ ] CI is green on the pull request (format, lint, typecheck, unit tests, migrations +
       seed, build, smoke test)
-- [ ] `stage.nextntech.org` deployed from the latest `stage` commit
+- [ ] `stage.nextntech.org` deployed from the latest `staging` commit
 - [ ] Home, Courses, a course page, a lesson and About open without errors
 - [ ] Same pages in **Dari** (`/fa`) and **Pashto** (`/ps`): layout is right-to-left,
       English course names read correctly
@@ -585,12 +585,12 @@ More hosting fixes: [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md#troubleshooting).
 
 Newest first.
 
-| Date       | Change                                                                                                                                                                                                                                                                                                                  | PR                                                                                                       |
-| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| 2026-09-29 | Adopted the shared AI workflow: `CLAUDE.md` project facts + `docs/AI-WORKFLOW-PROMPT.md`, GitHub Actions CI, `server.js` for cPanel Passenger, `.env.example` with empty values, README in the standard structure with screenshots, and a fix so English course names and summaries read correctly on Dari/Pashto pages | (this change)                                                                                            |
-| 2026-09-28 | Hosting guide for cPanel AI App Hosting + PostgreSQL, and a GitHub Codespaces preview setup                                                                                                                                                                                                                             | [#3](https://github.com/PDostiyar/NextNtech/pull/3), [#4](https://github.com/PDostiyar/NextNtech/pull/4) |
-| 2026-09-28 | `stage` → `main` branching, README, CONTRIBUTING, Code of Conduct, Security policy, issue/PR templates                                                                                                                                                                                                                  | [#1](https://github.com/PDostiyar/NextNtech/pull/1), [#2](https://github.com/PDostiyar/NextNtech/pull/2) |
-| 2026-09-28 | Phase 1: Next.js app, design system, English/Dari/Pashto with RTL, database schema, 6 courses / 24 modules / 14 lessons, Home, Courses, Course, Lesson and About pages                                                                                                                                                  | [#1](https://github.com/PDostiyar/NextNtech/pull/1)                                                      |
+| Date       | Change                                                                                                                                                                                                                                                                                                                                                                                       | PR                                                                                                       |
+| ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| 2026-09-29 | Adopted the shared AI workflow: `CLAUDE.md` project facts + `docs/AI-WORKFLOW-PROMPT.md`, GitHub Actions CI, `server.js` for cPanel Passenger, `.env.example` with empty values, README in the standard structure with screenshots, and a fix so English course names and summaries read correctly on Dari/Pashto pages; working branch renamed `stage` → `staging` (now the default branch) | (this change)                                                                                            |
+| 2026-09-28 | Hosting guide for cPanel AI App Hosting + PostgreSQL, and a GitHub Codespaces preview setup                                                                                                                                                                                                                                                                                                  | [#3](https://github.com/PDostiyar/NextNtech/pull/3), [#4](https://github.com/PDostiyar/NextNtech/pull/4) |
+| 2026-09-28 | `stage` → `main` branching (branch renamed to `staging` on 2026-09-29), README, CONTRIBUTING, Code of Conduct, Security policy, issue/PR templates                                                                                                                                                                                                                                           | [#1](https://github.com/PDostiyar/NextNtech/pull/1), [#2](https://github.com/PDostiyar/NextNtech/pull/2) |
+| 2026-09-28 | Phase 1: Next.js app, design system, English/Dari/Pashto with RTL, database schema, 6 courses / 24 modules / 14 lessons, Home, Courses, Course, Lesson and About pages                                                                                                                                                                                                                       | [#1](https://github.com/PDostiyar/NextNtech/pull/1)                                                      |
 
 ---
 

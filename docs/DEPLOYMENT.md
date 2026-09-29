@@ -18,8 +18,8 @@ The repository includes a ready-made setup (`.devcontainer/`) that installs ever
 creates a database, loads the courses, and starts the site.
 
 1. On GitHub, open the repository and switch to the branch you want to preview
-   (`stage` to test new work, `main` for what's live).
-2. Click the green **Code** button → **Codespaces** tab → **Create codespace on stage**.
+   (`staging` to test new work, `main` for what's live).
+2. Click the green **Code** button → **Codespaces** tab → **Create codespace on staging**.
 3. Wait 3–5 minutes the first time. When the terminal says **"Ready"**, the site starts
    automatically and a browser tab opens. (If not: open the **Ports** tab and click the
    globe icon next to port **3000**.)
@@ -126,12 +126,12 @@ Open your domain — you should see the home page with all six courses. 🎉
 
 Repeat Step 2 to create a **second app**:
 
-- Branch: **`stage`**
+- Branch: **`staging`**
 - Domain: a subdomain such as `stage.nextntech.org`
 - Its **own separate database** (never share the live database with staging)
 - `NEXT_PUBLIC_SITE_URL=https://stage.nextntech.org`
 
-Now the flow matches our branches: new work lands on `stage` → test it on
+Now the flow matches our branches: new work lands on `staging` → test it on
 `stage.nextntech.org` → release to `main` → live on `nextntech.org`.
 
 ### Updating the site
@@ -195,7 +195,7 @@ request**.
 5. Deploy, then run `npx prisma db seed` once from your computer with `DATABASE_URL`
    pointing at the Neon database.
 6. Settings → Domains → add `nextntech.org`. Set the **Production Branch** to `main`;
-   pushes to `stage` get their own preview address.
+   pushes to `staging` get their own preview address.
 
 A full, step-by-step deployment guide (login providers, email, backups) is part of build
 Phase 6.

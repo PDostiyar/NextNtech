@@ -17,7 +17,7 @@
 
 ## Checklist
 
-- [ ] This pull request targets the `stage` branch (not `main`)
+- [ ] This pull request targets the `staging` branch (not `main`)
 
 - [ ] `npm run lint`, `npm run typecheck` and `npm test` pass
 - [ ] Formatted with `npm run format`
