@@ -66,12 +66,12 @@ export default async function HomePage({ params }: { params: Promise<{ locale: L
               <div className="text-3xl" aria-hidden="true">
                 {c.emoji}
               </div>
-              <h3 className="mt-2 mb-1.5 text-lg font-extrabold text-ink">
-                <En>{c.title}</En>
-              </h3>
-              <p className="mb-2.5 text-sm leading-normal">
-                <En>{c.summary}</En>
-              </p>
+              <En as="h3" className="mt-2 mb-1.5 text-lg font-extrabold text-ink">
+                {c.title}
+              </En>
+              <En as="p" className="mb-2.5 text-sm leading-normal">
+                {c.summary}
+              </En>
               <span
                 className="text-[13px] font-bold text-course"
                 style={{ "--course": c.color } as CSSProperties}

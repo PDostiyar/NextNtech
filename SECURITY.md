@@ -34,4 +34,4 @@ it's fixed (unless you'd rather stay anonymous).
 ## Supported versions
 
 Only the latest version on the `main` branch (the live site) is supported. Fixes are made
-on `stage` first and released to `main`.
+on `staging` first and released to `main`.

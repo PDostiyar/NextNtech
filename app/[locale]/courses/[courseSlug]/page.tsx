@@ -44,9 +44,8 @@ export default async function CoursePage({ params }: Props) {
         <h1 className="mb-1.5 text-[30px] font-extrabold text-ink">
           <span aria-hidden="true">{course.emoji}</span> <En>{course.title}</En>
         </h1>
-        <p>
-          <En>{course.summary}</En> {t("anywhereNote")}
-        </p>
+        <En as="p">{course.summary}</En>
+        <p>{t("anywhereNote")}</p>
       </div>
 
       <ol className="mt-5 grid gap-3">
