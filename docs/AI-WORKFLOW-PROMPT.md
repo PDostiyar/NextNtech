@@ -91,11 +91,12 @@ if they aren't there either, ask me. Never guess domains or credentials.
    in cPanel; Codespaces keys go in Codespaces secrets.
 4. **README is mandatory.** Every new feature, page, function, API route,
    env var, database table/migration, dependency or deploy step must be
-   documented in `README.md` **in the same commit or PR**. Add a line to the
-   README's **Feature log** each time. A change without its README update
-   isn't done. If a change affects the look of a page, retake that page's
-   screenshot in `docs/screenshots/`. If it changes colors or fonts, update
-   the color palette table.
+   documented in `README.md` **in the same commit or PR**. A change without
+   its README update isn't done. Keep the README **short and high-level** (I'm
+   a developer: say what is connected to what and where to fix things, not
+   every detail). If the homepage look changes, retake
+   `docs/screenshots/home.jpg`; if colors or fonts change, update the short
+   color/font line.
 5. **Standard README format.** Keep `README.md` in the standard structure in
    section 3 below. If the README doesn't follow it yet, restructure it,
    keeping all existing content.
@@ -120,6 +121,10 @@ if they aren't there either, ask me. Never guess domains or credentials.
 
 Use these sections in this order. Keep the headings even when a section is
 short. Write "Not used" rather than deleting a section (e.g. Database: Not used).
+Keep every section **brief and high-level**: bullets and short tables, no
+step-by-step essays. Aim for a README you can read in a few minutes. No table
+of contents, troubleshooting section or feature log (git history and PRs are
+the change log).
 
 ```text
 # <Project name>
@@ -131,11 +136,11 @@ short. Write "Not used" rather than deleting a section (e.g. Database: Not used)
 | Staging | https://stage.example.com | staging | cPanel → <app/doc root> |
 | Repo | github.com/<owner>/<repo> | – | private |
 
-### Overview                            (what visitors can do, in plain words)
-<main screenshot>                        docs/screenshots/home.jpg
-<table of screenshots of the key pages, including mobile and dark mode if there is one>
+### Overview
+<ONE screenshot only>                    docs/screenshots/home.jpg
+<two short lines: "The official website of <company> (<domain>), built with <real stack>."
+ Name only the technologies actually used.>
 
-## Table of contents
 ## 1. Workflow: staging → production     (the diagram above + repo-specific notes)
 ## 2. Tech stack                          (table: framework, frontend, backend, data, auth, CI + versions)
    ### Architecture: frontend and backend (diagram: browser ↔ server ↔ database/external services;
@@ -145,22 +150,20 @@ short. Write "Not used" rather than deleting a section (e.g. Database: Not used)
    ### Folder overview                    (top-level folders in one line each; full tree in §9)
 ## 3. Run it locally                      (prerequisites, install, run, scripts table)
 ## 4. Configuration and secrets           (every env var: name, purpose, where set; never values)
-## 5. Deploying (hosting)                 (staging + production: cPanel steps for THIS project type,
-                                          how to update after a merge, rollback)
-## 6. Preview in GitHub Codespaces        (second option; lifecycle: stop/delete, cost)
-## 7. How the application works           (site map, main user flows, data flow)
-## 8. Pages, sections and design          (design system: COLOR PALETTE table
-                                          [token | light hex | dark hex | used for], fonts table
-                                          [role | font | where set], layout rules; then a
-                                          page-by-page table of sections)
+## 5. Deploying (hosting)                 (one-time cPanel setup as a few bullets; how to update
+                                          after a merge; rollback in one or two lines)
+## 6. Preview in GitHub Codespaces        (two or three lines: how to open it; it stops/deletes when idle)
+## 7. How the application works           (one table: page | URL | what it does; one line each on
+                                          the main flows and the build/data flow)
+## 8. Pages, sections and design          (short bullets: main colors as one line of name + hex,
+                                          fonts in one line, layout rules, shared parts on every
+                                          page, where the design files are. No full palette table)
 ## 9. Project structure                   (folder tree with one-line explanations)
 ## 10. Making changes manually            (recipes for the common edits)
 ## 11. Making changes with AI             (how to prompt, review, approve; link to this prompt)
 ## 12. Database                           (engine, tables, migrations, backups; or "Not used")
 ## 13. Testing checklist                  (before merging staging → main)
 ## 14. Production notes                   (go-live checklist, known limitations)
-## 15. Troubleshooting                    (problem → fix table)
-## 16. Feature log                        (newest first: date · change · PR link)
 ```
 
 ## 4. Hosting playbook (cPanel)
@@ -279,7 +282,7 @@ deploys are a button click in cPanel.
 - [ ] Change is on `staging` and pushed
 - [ ] Checks pass (lint/build/tests or HTML check); CI is green
 - [ ] Tested in a browser (or clearly stated what couldn't be tested)
-- [ ] `README.md` updated (the relevant section **and** the Feature log; screenshots / color palette if the look changed)
+- [ ] `README.md` updated where the change affects it (kept short; `home.jpg` retaken if the homepage look changed)
 - [ ] No secrets committed
 - [ ] Told me in plain language what changed and what to check on the staging URL
 - [ ] `main` untouched until I approve the staging → main merge
@@ -321,12 +324,15 @@ already done.
 8. **README.** Rewrite `README.md` in the standard structure (section 3),
    keeping all existing useful content. It must include:
    - the environments table (`stage.<domain>` / `<domain>`);
-   - an overview, with **screenshots** taken from a real running build and
-     saved in `docs/screenshots/` (home, key pages, mobile, dark mode if any);
+   - an overview: **one** homepage screenshot taken from a real running build
+     (`docs/screenshots/home.jpg`) and two short lines on what the site is and
+     what it's built with;
    - frontend/backend architecture, the data structure and a folder overview;
-   - the **color palette** and fonts, read from the actual CSS/theme files;
-   - cPanel deploy steps for staging and production, including rollback;
-   - a Feature log that starts with this adoption.
+   - the main colors and fonts in one or two lines, read from the actual
+     CSS/theme files;
+   - cPanel deploy steps for staging and production (a few bullets),
+     including rollback.
+   Keep the whole README short and high-level (sections 1–14 only).
 9. **Test.** Run the checks and open the site in a browser. Then push
    everything to `staging` and open a PR `staging` → `main`. **Don't merge**
    until I say so.

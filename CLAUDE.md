@@ -122,5 +122,5 @@ Rules:
 - Write tests for grading, streak calculation, certificate eligibility, and the
   under-13 consent flow.
 - After each phase: run lint, typecheck, and tests; fix everything; update README.md
-  (the relevant section AND the Feature log); commit with a clear message; push to GitHub.
+  (kept short and high-level; retake docs/screenshots/home.jpg if the homepage changes); commit with a clear message; push to GitHub.
 - Ask me before: adding a paid service, changing the stack, or deleting data/migrations.
